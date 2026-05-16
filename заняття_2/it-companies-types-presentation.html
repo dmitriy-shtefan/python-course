@@ -1,0 +1,944 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ІТ-компанії: типи, команди, ролі</title>
+  <style>
+    :root {
+      --ink: #18202b;
+      --muted: #637085;
+      --paper: #f6f2e9;
+      --panel: #ffffff;
+      --line: #d8d2c3;
+      --blue: #2364aa;
+      --green: #2f7d5a;
+      --red: #b5473f;
+      --yellow: #d99b2b;
+      --dark: #111827;
+      --shadow: 0 18px 45px rgba(24, 32, 43, 0.13);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        linear-gradient(90deg, rgba(24, 32, 43, 0.045) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(24, 32, 43, 0.04) 1px, transparent 1px),
+        var(--paper);
+      background-size: 42px 42px;
+    }
+
+    body {
+      overflow: hidden;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .deck {
+      width: 100vw;
+      height: 100vh;
+      display: grid;
+      grid-template-rows: 1fr auto;
+    }
+
+    .slide {
+      display: none;
+      min-height: 0;
+      padding: clamp(28px, 4vw, 58px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide.active {
+      display: grid;
+      align-items: center;
+      animation: enter 260ms ease;
+    }
+
+    @keyframes enter {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .content {
+      width: min(1120px, 100%);
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      margin: 0 0 16px;
+      color: var(--blue);
+      font-size: clamp(13px, 1.5vw, 16px);
+      font-weight: 800;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2 {
+      margin: 0;
+      color: var(--dark);
+      letter-spacing: 0;
+      line-height: 0.98;
+    }
+
+    h1 {
+      font-size: clamp(44px, 8vw, 92px);
+      max-width: 980px;
+    }
+
+    h2 {
+      font-size: clamp(36px, 5.4vw, 68px);
+      max-width: 980px;
+    }
+
+    .lead {
+      margin: 24px 0 0;
+      max-width: 760px;
+      color: var(--muted);
+      font-size: clamp(20px, 2.2vw, 29px);
+      line-height: 1.35;
+    }
+
+    .plain {
+      margin: 22px 0 0;
+      max-width: 900px;
+      font-size: clamp(21px, 2.2vw, 30px);
+      line-height: 1.4;
+    }
+
+    .grid {
+      display: grid;
+      gap: 18px;
+      margin-top: 36px;
+    }
+
+    .grid.three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .grid.two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .card {
+      min-height: 170px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.82);
+      box-shadow: var(--shadow);
+    }
+
+    .card.compact {
+      min-height: 126px;
+      box-shadow: none;
+    }
+
+    .card strong {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--dark);
+      font-size: clamp(22px, 2.4vw, 30px);
+      line-height: 1.05;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(17px, 1.6vw, 20px);
+      line-height: 1.42;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      margin-bottom: 16px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .tag.blue {
+      background: var(--blue);
+    }
+
+    .tag.green {
+      background: var(--green);
+    }
+
+    .tag.red {
+      background: var(--red);
+    }
+
+    .tag.yellow {
+      background: var(--yellow);
+    }
+
+    .compare {
+      width: 100%;
+      margin-top: 34px;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      table-layout: fixed;
+    }
+
+    .compare th,
+    .compare td {
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      font-size: clamp(16px, 1.6vw, 20px);
+      line-height: 1.35;
+    }
+
+    .compare th {
+      background: #233142;
+      color: #fff;
+      font-size: clamp(15px, 1.4vw, 18px);
+    }
+
+    .compare tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 38px;
+      align-items: stretch;
+    }
+
+    .step {
+      position: relative;
+      min-height: 150px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .step::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: -14px;
+      width: 16px;
+      height: 2px;
+      background: var(--blue);
+    }
+
+    .step:last-child::after {
+      display: none;
+    }
+
+    .step span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      margin-bottom: 14px;
+      border-radius: 50%;
+      background: var(--blue);
+      color: #fff;
+      font-weight: 900;
+    }
+
+    .step strong {
+      display: block;
+      font-size: clamp(19px, 1.8vw, 24px);
+      line-height: 1.1;
+    }
+
+    .step p {
+      margin: 9px 0 0;
+      color: var(--muted);
+      font-size: clamp(15px, 1.4vw, 18px);
+      line-height: 1.35;
+    }
+
+    .role-map {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 24px;
+      margin-top: 36px;
+      align-items: stretch;
+    }
+
+    .board {
+      min-height: 350px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, rgba(35, 100, 170, 0.10), transparent 38%),
+        linear-gradient(225deg, rgba(47, 125, 90, 0.10), transparent 42%),
+        #fff;
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      padding: 20px;
+    }
+
+    .person {
+      min-height: 118px;
+      padding: 18px;
+      border: 1px solid rgba(24, 32, 43, 0.13);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.78);
+    }
+
+    .person b {
+      display: block;
+      margin-bottom: 7px;
+      font-size: clamp(18px, 1.7vw, 23px);
+    }
+
+    .person small {
+      color: var(--muted);
+      font-size: clamp(14px, 1.2vw, 17px);
+      line-height: 1.35;
+    }
+
+    .quote {
+      margin-top: 34px;
+      padding-left: 22px;
+      border-left: 6px solid var(--green);
+      color: var(--dark);
+      font-size: clamp(25px, 3vw, 42px);
+      font-weight: 850;
+      line-height: 1.16;
+      max-width: 940px;
+    }
+
+    .mini-list {
+      display: grid;
+      gap: 14px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .mini-list li {
+      padding: 18px 20px;
+      border-left: 5px solid var(--blue);
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.82);
+      color: var(--ink);
+      font-size: clamp(18px, 1.8vw, 24px);
+      line-height: 1.28;
+      box-shadow: 0 10px 24px rgba(24, 32, 43, 0.08);
+    }
+
+    .tiny-note {
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: clamp(15px, 1.35vw, 18px);
+      line-height: 1.45;
+    }
+
+    .visual-title {
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 34px;
+      align-items: center;
+    }
+
+    .city {
+      width: 280px;
+      height: 280px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      grid-template-rows: repeat(5, 1fr);
+      gap: 8px;
+      padding: 18px;
+      transform: rotate(-2deg);
+    }
+
+    .city div {
+      border-radius: 5px;
+      background: #dfe8f5;
+    }
+
+    .city div:nth-child(3n) {
+      background: #dbeadd;
+    }
+
+    .city div:nth-child(4n) {
+      background: #f2dfc0;
+    }
+
+    .city div:nth-child(7n) {
+      background: #e8c9c5;
+    }
+
+    .city div:nth-child(1),
+    .city div:nth-child(8),
+    .city div:nth-child(19) {
+      grid-row: span 2;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: auto 1fr auto auto;
+      gap: 14px;
+      align-items: center;
+      padding: 14px 18px;
+      border-top: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(12px);
+    }
+
+    .nav-btn {
+      min-width: 44px;
+      height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+      cursor: pointer;
+      font-size: 20px;
+      font-weight: 900;
+      box-shadow: 0 6px 16px rgba(24, 32, 43, 0.08);
+    }
+
+    .nav-btn:hover {
+      border-color: var(--blue);
+      color: var(--blue);
+    }
+
+    .progress {
+      position: relative;
+      height: 10px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #e6e0d1;
+    }
+
+    .bar {
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--blue), var(--green));
+      transition: width 200ms ease;
+    }
+
+    .counter {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 850px) {
+      body {
+        overflow: auto;
+      }
+
+      .deck {
+        min-height: 100vh;
+        height: auto;
+      }
+
+      .slide {
+        min-height: calc(100vh - 72px);
+        padding: 28px 18px;
+      }
+
+      .grid.three,
+      .grid.two,
+      .role-map,
+      .flow,
+      .visual-title {
+        grid-template-columns: 1fr;
+      }
+
+      .flow {
+        gap: 14px;
+      }
+
+      .step::after {
+        display: none;
+      }
+
+      .board {
+        min-height: 0;
+        grid-template-columns: 1fr;
+      }
+
+      .city {
+        width: min(280px, 100%);
+        height: 220px;
+        justify-self: start;
+      }
+
+      .compare {
+        table-layout: auto;
+      }
+
+      .compare th,
+      .compare td {
+        padding: 14px 12px;
+      }
+
+      .controls {
+        grid-template-columns: auto 1fr auto;
+      }
+
+      .hint {
+        display: none;
+      }
+    }
+
+    @media (max-height: 760px) and (min-width: 851px) {
+      .slide {
+        padding: 24px clamp(46px, 6vw, 80px);
+      }
+
+      h1 {
+        font-size: clamp(42px, 6.6vw, 76px);
+      }
+
+      h2 {
+        font-size: clamp(34px, 4.2vw, 52px);
+        line-height: 1.02;
+      }
+
+      .lead {
+        margin-top: 18px;
+        font-size: clamp(19px, 1.8vw, 24px);
+      }
+
+      .plain,
+      .quote {
+        margin-top: 18px;
+      }
+
+      .grid,
+      .flow,
+      .role-map {
+        margin-top: 24px;
+      }
+
+      .card {
+        min-height: 142px;
+        padding: 18px;
+      }
+
+      .card.compact {
+        min-height: 104px;
+      }
+
+      .card strong {
+        margin-bottom: 7px;
+        font-size: clamp(20px, 2vw, 26px);
+      }
+
+      .card p,
+      .step p,
+      .person small {
+        font-size: clamp(15px, 1.35vw, 18px);
+      }
+
+      .compare {
+        margin-top: 24px;
+      }
+
+      .compare th,
+      .compare td {
+        padding: 13px 16px;
+      }
+
+      .step {
+        min-height: 128px;
+        padding: 16px;
+      }
+
+      .board {
+        min-height: 294px;
+      }
+
+      .person {
+        min-height: 98px;
+        padding: 14px;
+      }
+
+      .mini-list li {
+        padding: 14px 16px;
+        font-size: clamp(16px, 1.5vw, 20px);
+      }
+
+      .tiny-note {
+        margin-top: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="deck" aria-live="polite">
+    <section class="slide active">
+      <div class="content visual-title">
+        <div>
+          <h1>ІТ-компанії: хто що робить і як працюють команди</h1>
+        </div>
+        <div class="city" aria-hidden="true">
+          <div></div><div></div><div></div><div></div><div></div>
+          <div></div><div></div><div></div><div></div><div></div>
+          <div></div><div></div><div></div><div></div><div></div>
+          <div></div><div></div><div></div><div></div><div></div>
+          <div></div><div></div><div></div><div></div><div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content">
+        <p class="eyebrow">1. Велика ідея</p>
+        <h2>ІТ-компанія не “пише код”. Вона вирішує задачі через цифрові продукти.</h2>
+        <p class="plain">Код - це інструмент. Насправді команда намагається зрозуміти проблему, знайти рішення, зробити його зручним, перевірити якість і підтримувати після запуску.</p>
+        <div class="quote">Хороше ІТ починається не з технології, а з питання: “Кому і яку проблему ми вирішуємо?”</div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content">
+        <p class="eyebrow">2. Три типи компаній</p>
+        <h2>Outsource, outstaff і product: різниця у тому, для кого працює команда.</h2>
+        <div class="grid three">
+          <article class="card">
+            <span class="tag blue">Outsource</span>
+            <strong>Компанія робить проєкт для клієнта</strong>
+            <p>Клієнт має бізнес-задачу, а команда бере на себе розробку частини або всього рішення.</p>
+          </article>
+          <article class="card">
+            <span class="tag green">Outstaff</span>
+            <strong>Фахівці працюють у команді клієнта</strong>
+            <p>Людина формально в одній компанії, але щоденно працює з процесами іншої.</p>
+          </article>
+          <article class="card">
+            <span class="tag red">Product</span>
+            <strong>Компанія розвиває власний продукт</strong>
+            <p>Команда довго покращує один сервіс або платформу для своїх користувачів.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content">
+        <p class="eyebrow">3. Outsource</p>
+        <h2>Outsource схожий на будівельну команду, яку найняли побудувати конкретний об'єкт.</h2>
+        <div class="grid two">
+          <article class="card compact">
+            <strong>Що важливо</strong>
+            <p>Зрозуміти вимоги клієнта, оцінити роботу, домовитися про терміни, регулярно показувати прогрес.</p>
+          </article>
+          <article class="card compact">
+            <strong>Типові плюси</strong>
+            <p>Багато різних проєктів, швидке навчання, досвід з різними бізнесами та технологіями.</p>
+          </article>
+          <article class="card compact">
+            <strong>Типові виклики</strong>
+            <p>Потрібно швидко входити в новий контекст і вміти працювати з обмеженнями клієнта.</p>
+          </article>
+          <article class="card compact">
+            <strong>Приклад</strong>
+            <p>Мережа клінік замовляє сайт для запису пацієнтів і кабінет адміністратора.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content">
+        <p class="eyebrow">4. Outstaff</p>
+        <h2>Outstaff - це коли компанія “підсилює” команду клієнта конкретними спеціалістами.</h2>
+        <div class="grid two">
+          <article class="card compact">
+            <strong>Що важливо</strong>
+            <p>Добре вбудуватися в процеси клієнта: його зустрічі, правила, інструменти, стиль комунікації.</p>
+          </article>
+          <article class="card compact">
+            <strong>Типові плюси</strong>
+            <p>Можна глибше зануритися в один продукт і працювати поряд із сильною внутрішньою командою.</p>
+          </article>
+          <article class="card compact">
+            <strong>Типові виклики</strong>
+            <p>Є дві реальності: роботодавець і клієнт. Важливо розуміти, хто за що відповідає.</p>
+          </article>
+          <article class="card compact">
+            <strong>Приклад</strong>
+            <p>Банку потрібні ще два front-end розробники у вже існуючу команду мобільного банкінгу.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content">
+        <p class="eyebrow">5. Product</p>
+        <h2>Product-компанія будує власний сервіс і живе його довгостроковим успіхом.</h2>
+        <div class="grid two">
+          <article class="card compact">
+            <strong>Що важливо</strong>
+            <p>Розуміти користувачів, вимірювати результат, покращувати продукт маленькими, але постійними кроками.</p>
+          </article>
+          <article class="card compact">
+            <strong>Типові плюси</strong>
+            <p>Є відчуття власності: команда бачить, як рішення впливають на продукт місяцями й роками.</p>
+          </article>
+          <article class="card compact">
+            <strong>Типові виклики</strong>
+            <p>Не кожна ідея варта розробки. Треба вміти перевіряти гіпотези, а не просто “додавати фічі”.</p>
+          </article>
+          <article class="card compact">
+            <strong>Приклад</strong>
+            <p>Команда розвиває застосунок для вивчення мов і щотижня покращує уроки, оплату та статистику.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content">
+        <p class="eyebrow">6. Коротке порівняння</p>
+        <h2>Один і той самий фахівець може працювати дуже по-різному залежно від типу компанії.</h2>
+        <table class="compare">
+          <thead>
+            <tr>
+              <th>Тип</th>
+              <th>Хто головний замовник</th>
+              <th>Фокус роботи</th>
+              <th>Що часто змінюється</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Outsource</strong></td>
+              <td>Зовнішній клієнт</td>
+              <td>Зробити проєкт або частину проєкту</td>
+              <td>Проєкти, домени, вимоги</td>
+            </tr>
+            <tr>
+              <td><strong>Outstaff</strong></td>
+              <td>Команда клієнта</td>
+              <td>Підсилити існуючу команду</td>
+              <td>Процеси клієнта, задачі в команді</td>
+            </tr>
+            <tr>
+              <td><strong>Product</strong></td>
+              <td>Користувачі продукту</td>
+              <td>Розвивати власний сервіс</td>
+              <td>Пріоритети, гіпотези, метрики</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content">
+        <p class="eyebrow">7. Developer</p>
+        <h2>Developer створює технічну частину рішення, але “розробник” - це не одна професія.</h2>
+        <div class="role-map">
+          <div class="board">
+            <div class="person">
+              <b>Back-end</b>
+              <small>Логіка, дані, сервери, інтеграції. Те, що часто не видно користувачу напряму.</small>
+            </div>
+            <div class="person">
+              <b>Front-end</b>
+              <small>Інтерфейс у браузері: екрани, кнопки, форми, зручність взаємодії.</small>
+            </div>
+            <div class="person">
+              <b>Full-stack</b>
+              <small>Може працювати і з front-end, і з back-end, особливо у менших командах.</small>
+            </div>
+            <div class="person">
+              <b>DevOps</b>
+              <small>Допомагає команді надійно запускати, оновлювати й підтримувати систему.</small>
+            </div>
+          </div>
+          <ul class="mini-list">
+            <li>Developer не просто “сидить і кодує”: він уточнює задачу, оцінює ризики, читає чужий код, виправляє помилки.</li>
+            <li>Найкращі рішення часто народжуються з питань до команди, а не з першої спроби написати код.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content">
+        <p class="eyebrow">8. Інші ключові ролі</p>
+        <h2>Команда - це не тільки розробники. Хтось тримає фокус, якість і технічний напрям.</h2>
+        <div class="grid three">
+          <article class="card">
+            <span class="tag yellow">Project Manager</span>
+            <strong>Організовує рух проєкту</strong>
+            <p>Допомагає команді домовлятися про пріоритети, терміни, ризики, комунікацію з клієнтом або бізнесом.</p>
+          </article>
+          <article class="card">
+            <span class="tag blue">Technical Lead</span>
+            <strong>Відповідає за технічні рішення</strong>
+            <p>Дивиться, щоб система була не тільки “зроблена”, а й підтримувана, зрозуміла та готова до росту.</p>
+          </article>
+          <article class="card">
+            <span class="tag green">QA</span>
+            <strong>Шукає ризики для якості</strong>
+            <p>Перевіряє, чи працює продукт як очікується, чи не зламали стару поведінку, чи зрозумілий сценарій користувачу.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content">
+        <p class="eyebrow">9. Як задача проходить через команду</p>
+        <h2>Навіть маленька кнопка має шлях від ідеї до запуску.</h2>
+        <div class="flow">
+          <div class="step">
+            <span>1</span>
+            <strong>Ідея</strong>
+            <p>Що хочемо покращити і для кого?</p>
+          </div>
+          <div class="step">
+            <span>2</span>
+            <strong>Уточнення</strong>
+            <p>Команда домовляється, що саме треба зробити.</p>
+          </div>
+          <div class="step">
+            <span>3</span>
+            <strong>Розробка</strong>
+            <p>Developer створює рішення і просить рев'ю.</p>
+          </div>
+          <div class="step">
+            <span>4</span>
+            <strong>Перевірка</strong>
+            <p>QA і команда шукають проблеми до релізу.</p>
+          </div>
+          <div class="step">
+            <span>5</span>
+            <strong>Запуск</strong>
+            <p>Функція потрапляє до користувачів, команда дивиться на результат.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content">
+        <p class="eyebrow">10. Що варто запам'ятати</p>
+        <h2>Базове розуміння ІТ - це розуміння людей, задач і відповідальності.</h2>
+        <div class="grid two">
+          <article class="card compact">
+            <strong>Тип компанії впливає на щоденну роботу</strong>
+            <p>Outsource, outstaff і product мають різні очікування, темп і спосіб комунікації.</p>
+          </article>
+          <article class="card compact">
+            <strong>Ролі доповнюють одна одну</strong>
+            <p>Developer, PM, Tech Lead і QA дивляться на продукт з різних сторін.</p>
+          </article>
+          <article class="card compact">
+            <strong>ІТ - командна робота</strong>
+            <p>Якість залежить не тільки від коду, а й від ясних вимог, перевірки, пріоритетів і спілкування.</p>
+          </article>
+          <article class="card compact">
+            <strong>Почати можна без глибоких технічних деталей</strong>
+            <p>Спершу достатньо розуміти, хто є хто, як рухається задача і навіщо потрібен продукт.</p>
+          </article>
+        </div>
+        <p class="tiny-note">Фінальне питання для аудиторії: у якому типі компанії вам було б цікавіше працювати і чому?</p>
+      </div>
+    </section>
+
+    <nav class="controls" aria-label="Керування презентацією">
+      <button class="nav-btn" type="button" id="prev" aria-label="Попередній слайд">‹</button>
+      <div class="progress" aria-hidden="true"><div class="bar" id="bar"></div></div>
+      <span class="counter" id="counter">1 / 11</span>
+      <button class="nav-btn" type="button" id="next" aria-label="Наступний слайд">›</button>
+      <span class="hint">Клавіші: ← →, Home, End</span>
+    </nav>
+  </main>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const counter = document.querySelector("#counter");
+    const bar = document.querySelector("#bar");
+    const prev = document.querySelector("#prev");
+    const next = document.querySelector("#next");
+    let current = 0;
+
+    function showSlide(index) {
+      current = Math.max(0, Math.min(index, slides.length - 1));
+      slides.forEach((slide, slideIndex) => {
+        slide.classList.toggle("active", slideIndex === current);
+      });
+      counter.textContent = `${current + 1} / ${slides.length}`;
+      bar.style.width = `${((current + 1) / slides.length) * 100}%`;
+      prev.disabled = current === 0;
+      next.disabled = current === slides.length - 1;
+      document.title = `${current + 1}/${slides.length} - ІТ-компанії`;
+    }
+
+    prev.addEventListener("click", () => showSlide(current - 1));
+    next.addEventListener("click", () => showSlide(current + 1));
+
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowRight" || event.key === "PageDown" || event.key === " ") {
+        event.preventDefault();
+        showSlide(current + 1);
+      }
+      if (event.key === "ArrowLeft" || event.key === "PageUp") {
+        event.preventDefault();
+        showSlide(current - 1);
+      }
+      if (event.key === "Home") {
+        event.preventDefault();
+        showSlide(0);
+      }
+      if (event.key === "End") {
+        event.preventDefault();
+        showSlide(slides.length - 1);
+      }
+    });
+
+    showSlide(0);
+  </script>
+</body>
+</html>
