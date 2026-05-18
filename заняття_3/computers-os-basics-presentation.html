@@ -1,0 +1,957 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Як працюють комп'ютери та операційні системи</title>
+  <link rel="icon" href="data:,">
+  <style>
+    :root {
+      --ink: #172033;
+      --muted: #627089;
+      --paper: #f5f3ee;
+      --panel: #ffffff;
+      --line: #d9d4c8;
+      --blue: #235fa7;
+      --green: #27765a;
+      --red: #ad463f;
+      --yellow: #c78a22;
+      --dark: #101827;
+      --shadow: 0 18px 45px rgba(16, 24, 39, 0.13);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        linear-gradient(90deg, rgba(16, 24, 39, 0.045) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(16, 24, 39, 0.04) 1px, transparent 1px),
+        var(--paper);
+      background-size: 42px 42px;
+    }
+
+    body {
+      overflow: hidden;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .deck {
+      width: 100vw;
+      height: 100vh;
+      display: grid;
+      grid-template-rows: 1fr auto;
+    }
+
+    .slide {
+      display: none;
+      min-height: 0;
+      padding: clamp(28px, 4vw, 58px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide.active {
+      display: grid;
+      align-items: center;
+      animation: enter 260ms ease;
+    }
+
+    @keyframes enter {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .content {
+      width: min(1120px, 100%);
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      margin: 0 0 16px;
+      color: var(--blue);
+      font-size: clamp(13px, 1.5vw, 16px);
+      font-weight: 800;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2 {
+      margin: 0;
+      color: var(--dark);
+      letter-spacing: 0;
+      line-height: 0.98;
+    }
+
+    h1 {
+      font-size: clamp(44px, 8vw, 92px);
+      max-width: 980px;
+    }
+
+    h2 {
+      font-size: clamp(36px, 5.4vw, 68px);
+      max-width: 1010px;
+    }
+
+    .plain {
+      margin: 22px 0 0;
+      max-width: 900px;
+      font-size: clamp(21px, 2.2vw, 30px);
+      line-height: 1.4;
+    }
+
+    .grid {
+      display: grid;
+      gap: 18px;
+      margin-top: 36px;
+    }
+
+    .grid.three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .grid.two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .card {
+      min-height: 170px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.84);
+      box-shadow: var(--shadow);
+    }
+
+    .card.compact {
+      min-height: 126px;
+      box-shadow: none;
+    }
+
+    .card strong {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--dark);
+      font-size: clamp(22px, 2.4vw, 30px);
+      line-height: 1.05;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(17px, 1.6vw, 20px);
+      line-height: 1.42;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      margin-bottom: 16px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .tag.blue {
+      background: var(--blue);
+    }
+
+    .tag.green {
+      background: var(--green);
+    }
+
+    .tag.red {
+      background: var(--red);
+    }
+
+    .tag.yellow {
+      background: var(--yellow);
+    }
+
+    .visual-title {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 34px;
+      align-items: center;
+    }
+
+    .computer {
+      width: 300px;
+      height: 270px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-rows: 1fr 42px;
+      padding: 18px;
+      transform: rotate(-2deg);
+    }
+
+    .screen {
+      border: 8px solid #243142;
+      border-radius: 8px;
+      background:
+        linear-gradient(90deg, rgba(255, 255, 255, 0.38) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.32) 1px, transparent 1px),
+        linear-gradient(135deg, #dfeaf7, #e8f1df 55%, #f4dfbf);
+      background-size: 28px 28px, 28px 28px, auto;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .screen::before,
+    .screen::after {
+      content: "";
+      position: absolute;
+      border-radius: 5px;
+      background: rgba(16, 24, 39, 0.78);
+    }
+
+    .screen::before {
+      width: 112px;
+      height: 14px;
+      left: 26px;
+      top: 30px;
+    }
+
+    .screen::after {
+      width: 74px;
+      height: 74px;
+      right: 28px;
+      bottom: 26px;
+      background: rgba(35, 95, 167, 0.82);
+    }
+
+    .stand {
+      justify-self: center;
+      align-self: end;
+      width: 120px;
+      height: 34px;
+      border-bottom: 12px solid #243142;
+      border-left: 24px solid transparent;
+      border-right: 24px solid transparent;
+    }
+
+    .quote {
+      margin-top: 34px;
+      padding-left: 22px;
+      border-left: 6px solid var(--green);
+      color: var(--dark);
+      font-size: clamp(25px, 3vw, 42px);
+      font-weight: 850;
+      line-height: 1.16;
+      max-width: 940px;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 38px;
+      align-items: stretch;
+    }
+
+    .step {
+      position: relative;
+      min-height: 150px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .step::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: -14px;
+      width: 16px;
+      height: 2px;
+      background: var(--blue);
+    }
+
+    .step:last-child::after {
+      display: none;
+    }
+
+    .step span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      margin-bottom: 14px;
+      border-radius: 50%;
+      background: var(--blue);
+      color: #fff;
+      font-weight: 900;
+    }
+
+    .step strong {
+      display: block;
+      font-size: clamp(19px, 1.8vw, 24px);
+      line-height: 1.1;
+    }
+
+    .step p {
+      margin: 9px 0 0;
+      color: var(--muted);
+      font-size: clamp(15px, 1.4vw, 18px);
+      line-height: 1.35;
+    }
+
+    .compare {
+      width: 100%;
+      margin-top: 34px;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      table-layout: fixed;
+    }
+
+    .compare th,
+    .compare td {
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      font-size: clamp(16px, 1.6vw, 20px);
+      line-height: 1.35;
+    }
+
+    .compare th {
+      background: #243142;
+      color: #fff;
+      font-size: clamp(15px, 1.4vw, 18px);
+    }
+
+    .compare tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .diagram {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 24px;
+      margin-top: 36px;
+      align-items: stretch;
+    }
+
+    .chip-board {
+      min-height: 320px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, rgba(35, 95, 167, 0.10), transparent 40%),
+        linear-gradient(225deg, rgba(39, 118, 90, 0.12), transparent 44%),
+        #fff;
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      padding: 20px;
+    }
+
+    .chip {
+      min-height: 90px;
+      border: 1px solid rgba(16, 24, 39, 0.13);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.78);
+      display: grid;
+      place-items: center;
+      color: var(--dark);
+      font-size: clamp(18px, 1.7vw, 24px);
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .chip.wide {
+      grid-column: span 2;
+    }
+
+    .mini-list {
+      display: grid;
+      gap: 14px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .mini-list li {
+      padding: 18px 20px;
+      border-left: 5px solid var(--blue);
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.84);
+      color: var(--ink);
+      font-size: clamp(18px, 1.8vw, 24px);
+      line-height: 1.28;
+      box-shadow: 0 10px 24px rgba(16, 24, 39, 0.08);
+    }
+
+    .tiny-note {
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: clamp(15px, 1.35vw, 18px);
+      line-height: 1.45;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: auto 1fr auto auto;
+      gap: 14px;
+      align-items: center;
+      padding: 14px 18px;
+      border-top: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(12px);
+    }
+
+    .nav-btn {
+      min-width: 44px;
+      height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+      cursor: pointer;
+      font-size: 20px;
+      font-weight: 900;
+      box-shadow: 0 6px 16px rgba(16, 24, 39, 0.08);
+    }
+
+    .nav-btn:hover {
+      border-color: var(--blue);
+      color: var(--blue);
+    }
+
+    .progress {
+      position: relative;
+      height: 10px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #e6e0d1;
+    }
+
+    .bar {
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--blue), var(--green));
+      transition: width 200ms ease;
+    }
+
+    .counter {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 850px) {
+      body {
+        overflow: auto;
+      }
+
+      .deck {
+        min-height: 100vh;
+        height: auto;
+      }
+
+      .slide {
+        min-height: calc(100vh - 72px);
+        padding: 28px 18px;
+      }
+
+      .grid.three,
+      .grid.two,
+      .visual-title,
+      .flow,
+      .diagram {
+        grid-template-columns: 1fr;
+      }
+
+      .flow {
+        gap: 14px;
+      }
+
+      .step::after {
+        display: none;
+      }
+
+      .computer {
+        width: min(300px, 100%);
+        height: 230px;
+        justify-self: start;
+      }
+
+      .chip-board {
+        min-height: 0;
+      }
+
+      .compare {
+        table-layout: auto;
+      }
+
+      .compare th,
+      .compare td {
+        padding: 14px 12px;
+      }
+
+      .controls {
+        grid-template-columns: auto 1fr auto;
+      }
+
+      .hint {
+        display: none;
+      }
+    }
+
+    @media (max-height: 760px) and (min-width: 851px) {
+      .slide {
+        padding: 24px clamp(46px, 6vw, 80px);
+      }
+
+      h1 {
+        font-size: clamp(42px, 6.6vw, 76px);
+      }
+
+      h2 {
+        font-size: clamp(34px, 4.2vw, 52px);
+        line-height: 1.02;
+      }
+
+      .plain,
+      .quote {
+        margin-top: 18px;
+      }
+
+      .grid,
+      .flow,
+      .diagram {
+        margin-top: 24px;
+      }
+
+      .card {
+        min-height: 142px;
+        padding: 18px;
+      }
+
+      .card.compact {
+        min-height: 104px;
+      }
+
+      .card strong {
+        margin-bottom: 7px;
+        font-size: clamp(20px, 2vw, 26px);
+      }
+
+      .card p,
+      .step p {
+        font-size: clamp(15px, 1.35vw, 18px);
+      }
+
+      .compare {
+        margin-top: 24px;
+      }
+
+      .compare th,
+      .compare td {
+        padding: 13px 16px;
+      }
+
+      .step {
+        min-height: 128px;
+        padding: 16px;
+      }
+
+      .chip-board {
+        min-height: 278px;
+        padding: 16px;
+      }
+
+      .mini-list li {
+        padding: 14px 16px;
+        font-size: clamp(16px, 1.5vw, 20px);
+      }
+
+      .tiny-note {
+        margin-top: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="deck" aria-live="polite">
+    <section class="slide active">
+      <div class="content visual-title">
+        <div>
+          <h1>Як працюють комп'ютери та операційні системи</h1>
+        </div>
+        <div class="computer" aria-hidden="true">
+          <div class="screen"></div>
+          <div class="stand"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content">
+        <p class="eyebrow">1. Велика ідея</p>
+        <h2>Комп'ютер - це команда деталей, які дуже швидко домовляються між собою.</h2>
+        <p class="plain">Процесор рахує і приймає рішення, RAM тримає поточну роботу, SSD зберігає дані надовго, а операційна система допомагає всім цим користуватися.</p>
+        <div class="quote">Коли ви відкриваєте програму, всередині відбувається цілий маленький ланцюжок дій.</div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content">
+        <p class="eyebrow">2. Основні частини</p>
+        <h2>RAM, процесор і SSD відповідають за різні види роботи.</h2>
+        <div class="grid three">
+          <article class="card">
+            <span class="tag blue">CPU</span>
+            <strong>Процесор</strong>
+            <p>Виконує інструкції: порівнює, рахує, керує тим, що має відбутися наступним.</p>
+          </article>
+          <article class="card">
+            <span class="tag green">RAM</span>
+            <strong>Оперативна пам'ять</strong>
+            <p>Тримає те, з чим комп'ютер працює прямо зараз: вкладки, документи, відкриті програми.</p>
+          </article>
+          <article class="card">
+            <span class="tag red">SSD</span>
+            <strong>Постійне сховище</strong>
+            <p>Зберігає систему, програми, фото, відео й документи навіть після вимкнення.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content">
+        <p class="eyebrow">3. Процесор</p>
+        <h2>Процесор - це не “мозок” у людському сенсі, а дуже швидкий виконавець інструкцій.</h2>
+        <div class="grid two">
+          <article class="card compact">
+            <strong>Що він робить</strong>
+            <p>Бере прості команди одну за одною: додати, порівняти, перемістити дані, перейти до наступного кроку.</p>
+          </article>
+          <article class="card compact">
+            <strong>Чому швидкість важлива</strong>
+            <p>Чим більше корисних дій за секунду, тим швидше реагують програми й система.</p>
+          </article>
+          <article class="card compact">
+            <strong>Що таке ядра</strong>
+            <p>Це кілька “робочих ліній” усередині процесора, які можуть виконувати задачі паралельно.</p>
+          </article>
+          <article class="card compact">
+            <strong>Простий приклад</strong>
+            <p>Коли ви сортуєте таблицю, процесор багато разів порівнює значення і переставляє їх у правильному порядку.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content">
+        <p class="eyebrow">4. RAM</p>
+        <h2>RAM - це робочий стіл комп'ютера: швидкий, зручний, але не для постійного зберігання.</h2>
+        <div class="grid two">
+          <article class="card compact">
+            <strong>Що лежить у RAM</strong>
+            <p>Відкриті програми, вкладки браузера, частини файлів і дані, які потрібні саме зараз.</p>
+          </article>
+          <article class="card compact">
+            <strong>Чому вона “зникає”</strong>
+            <p>Після вимкнення живлення вміст RAM очищується. Тому документ потрібно зберігати на диск.</p>
+          </article>
+          <article class="card compact">
+            <strong>Коли RAM мало</strong>
+            <p>Система починає частіше звертатися до SSD, і комп'ютер може відчутно сповільнюватися.</p>
+          </article>
+          <article class="card compact">
+            <strong>Проста аналогія</strong>
+            <p>На маленькому столі важче тримати багато відкритих книжок, нотаток і чашку кави одночасно.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content">
+        <p class="eyebrow">5. SSD</p>
+        <h2>SSD - це довготривала пам'ять комп'ютера: повільніша за RAM, але зберігає все після вимкнення.</h2>
+        <div class="grid two">
+          <article class="card compact">
+            <strong>Що там зберігається</strong>
+            <p>Операційна система, програми, документи, налаштування, фото, відео та завантаження.</p>
+          </article>
+          <article class="card compact">
+            <strong>Чому SSD важливий</strong>
+            <p>Від швидкості SSD залежить, як швидко стартує система, відкриваються програми й копіюються файли.</p>
+          </article>
+          <article class="card compact">
+            <strong>SSD проти старого HDD</strong>
+            <p>SSD не має рухомих механічних частин, тому зазвичай працює значно швидше й тихіше.</p>
+          </article>
+          <article class="card compact">
+            <strong>Проста аналогія</strong>
+            <p>Це шафа з документами: не все лежить на столі, але потрібне можна швидко дістати.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content">
+        <p class="eyebrow">6. Операційна система</p>
+        <h2>Windows, macOS і Linux - це посередники між людиною, програмами та залізом.</h2>
+        <div class="diagram">
+          <div class="chip-board" aria-hidden="true">
+            <div class="chip">Людина</div>
+            <div class="chip">Програми</div>
+            <div class="chip">Файли</div>
+            <div class="chip wide">Операційна система</div>
+            <div class="chip">CPU</div>
+            <div class="chip">RAM</div>
+            <div class="chip">SSD</div>
+          </div>
+          <ul class="mini-list">
+            <li>Показує вікна, меню, панелі, робочий стіл і налаштування.</li>
+            <li>Розподіляє ресурси: кому дати процесорний час, пам'ять і доступ до диска.</li>
+            <li>Керує файлами, мережею, драйверами, безпекою та запуском програм.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content">
+        <p class="eyebrow">7. Windows, macOS, Linux</p>
+        <h2>Різні операційні системи вирішують схожі задачі, але мають різну культуру використання.</h2>
+        <table class="compare">
+          <thead>
+            <tr>
+              <th>Система</th>
+              <th>Де часто зустрічається</th>
+              <th>Що відчуває користувач</th>
+              <th>Важлива думка</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Windows</strong></td>
+              <td>Домашні ПК, офіси, ігри, багато бізнес-програм</td>
+              <td>Знайомий інтерфейс і широка сумісність</td>
+              <td>Найпоширеніший вибір для масового користувача</td>
+            </tr>
+            <tr>
+              <td><strong>macOS</strong></td>
+              <td>Комп'ютери Apple, дизайн, медіа, розробка</td>
+              <td>Сильна інтеграція з пристроями Apple</td>
+              <td>Працює тільки на Mac і має цілісну екосистему</td>
+            </tr>
+            <tr>
+              <td><strong>Linux</strong></td>
+              <td>Сервери, хмарні системи, розробка, технічні робочі станції</td>
+              <td>Багато свободи й варіантів налаштування</td>
+              <td>Дуже важливий у професійному ІТ та інтернет-інфраструктурі</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content">
+        <p class="eyebrow">8. Файли та папки</p>
+        <h2>Файл - це одиниця інформації, папка - спосіб навести порядок.</h2>
+        <div class="grid two">
+          <article class="card compact">
+            <strong>Файл</strong>
+            <p>Документ, фото, відео, архів або програма. У файлу є назва, тип, розмір і місце зберігання.</p>
+          </article>
+          <article class="card compact">
+            <strong>Папка</strong>
+            <p>Контейнер для файлів та інших папок. Допомагає групувати речі за темою або призначенням.</p>
+          </article>
+          <article class="card compact">
+            <strong>Шлях</strong>
+            <p>Адреса файлу на комп'ютері. Наприклад: де лежить фото, документ або програма.</p>
+          </article>
+          <article class="card compact">
+            <strong>Розширення</strong>
+            <p>Частина назви після крапки: .jpg, .pdf, .docx, .html. Часто підказує, чим відкрити файл.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content">
+        <p class="eyebrow">9. Термінал / консоль</p>
+        <h2>Термінал - це спосіб говорити з комп'ютером текстовими командами.</h2>
+        <div class="grid two">
+          <article class="card compact">
+            <strong>Навіщо він потрібен</strong>
+            <p>Швидко запускати інструменти, переходити між папками, перевіряти налаштування, автоматизувати повторювані дії.</p>
+          </article>
+          <article class="card compact">
+            <strong>Це не “режим хакера”</strong>
+            <p>Це звичайний професійний інструмент. Як калькулятор для бухгалтера або панель приладів для водія.</p>
+          </article>
+          <article class="card compact">
+            <strong>Команда</strong>
+            <p>Коротка інструкція: покажи файли, створи папку, запусти програму, встанови пакет.</p>
+          </article>
+          <article class="card compact">
+            <strong>Результат</strong>
+            <p>Комп'ютер відповідає текстом: показує список, повідомлення про успіх або помилку.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content">
+        <p class="eyebrow">10. Що відбувається, коли відкриваємо програму</p>
+        <h2>Звична дія користувача запускає кілька невидимих кроків.</h2>
+        <div class="flow">
+          <div class="step">
+            <span>1</span>
+            <strong>Клік</strong>
+            <p>Ви запускаєте програму через іконку або меню.</p>
+          </div>
+          <div class="step">
+            <span>2</span>
+            <strong>ОС шукає</strong>
+            <p>Система знаходить потрібні файли на SSD.</p>
+          </div>
+          <div class="step">
+            <span>3</span>
+            <strong>Завантажує</strong>
+            <p>Потрібні частини програми потрапляють у RAM.</p>
+          </div>
+          <div class="step">
+            <span>4</span>
+            <strong>CPU працює</strong>
+            <p>Процесор виконує інструкції програми.</p>
+          </div>
+          <div class="step">
+            <span>5</span>
+            <strong>Ви бачите</strong>
+            <p>На екрані з'являється вікно, кнопки й ваші дані.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content">
+        <p class="eyebrow">11. Що варто запам'ятати</p>
+        <h2>Комп'ютер стає зрозумілішим, якщо розділити його на прості ролі.</h2>
+        <div class="grid two">
+          <article class="card compact">
+            <strong>CPU виконує інструкції</strong>
+            <p>Він не “думає”, а дуже швидко обробляє прості команди.</p>
+          </article>
+          <article class="card compact">
+            <strong>RAM тримає поточну роботу</strong>
+            <p>Чим більше відкритих задач, тим важливішою стає оперативна пам'ять.</p>
+          </article>
+          <article class="card compact">
+            <strong>SSD зберігає надовго</strong>
+            <p>Там живуть система, програми й ваші файли після вимкнення.</p>
+          </article>
+          <article class="card compact">
+            <strong>ОС керує всім процесом</strong>
+            <p>Windows, macOS і Linux роблять залізо зручним для людини та програм.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <nav class="controls" aria-label="Керування презентацією">
+      <button class="nav-btn" type="button" id="prev" aria-label="Попередній слайд">‹</button>
+      <div class="progress" aria-hidden="true"><div class="bar" id="bar"></div></div>
+      <span class="counter" id="counter">1 / 12</span>
+      <button class="nav-btn" type="button" id="next" aria-label="Наступний слайд">›</button>
+      <span class="hint">Клавіші: ← →, Home, End</span>
+    </nav>
+  </main>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const counter = document.querySelector("#counter");
+    const bar = document.querySelector("#bar");
+    const prev = document.querySelector("#prev");
+    const next = document.querySelector("#next");
+    let current = 0;
+
+    function showSlide(index) {
+      current = Math.max(0, Math.min(index, slides.length - 1));
+      slides.forEach((slide, slideIndex) => {
+        slide.classList.toggle("active", slideIndex === current);
+      });
+      counter.textContent = `${current + 1} / ${slides.length}`;
+      bar.style.width = `${((current + 1) / slides.length) * 100}%`;
+      prev.disabled = current === 0;
+      next.disabled = current === slides.length - 1;
+      document.title = `${current + 1}/${slides.length} - Комп'ютери та ОС`;
+    }
+
+    prev.addEventListener("click", () => showSlide(current - 1));
+    next.addEventListener("click", () => showSlide(current + 1));
+
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowRight" || event.key === "PageDown" || event.key === " ") {
+        event.preventDefault();
+        showSlide(current + 1);
+      }
+      if (event.key === "ArrowLeft" || event.key === "PageUp") {
+        event.preventDefault();
+        showSlide(current - 1);
+      }
+      if (event.key === "Home") {
+        event.preventDefault();
+        showSlide(0);
+      }
+      if (event.key === "End") {
+        event.preventDefault();
+        showSlide(slides.length - 1);
+      }
+    });
+
+    showSlide(0);
+  </script>
+</body>
+</html>
