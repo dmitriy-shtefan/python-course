@@ -1,2 +1,3 @@
 ~*.pptx
 .idea
+.DS_File
