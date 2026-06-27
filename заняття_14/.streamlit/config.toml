@@ -1,2 +1,6 @@
 [client]
 toolbarMode = "minimal"
+
+[theme]
+borderColor = "#999999"
+showWidgetBorder = true
