@@ -32,7 +32,7 @@ def get_contact_form():
 def save_contact(contact):
     with open('contacts.txt', 'a', encoding='utf-8') as file:
         text = ','.join(contact.values())
-        file.write(text)
+        file.write(text + '\n')
         st.write('Збережено!')
 
 
@@ -68,5 +68,6 @@ if save_clicked and new_student:
 elif save_clicked:
     st.write("Помилка: заповніть всі поля контактної форми!")
 
+
 if st.button("Показати інформацію"):
-    display_contact(new_student)
+    display_contact(student)
