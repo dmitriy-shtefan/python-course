@@ -8,3 +8,6 @@ def show_items(items):
 tasks = ["повторити словники", "зберегти JSON"]
 
 show_items(tasks)
+
+# - повторити словники
+# - зберегти JSON

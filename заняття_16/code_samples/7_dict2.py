@@ -5,5 +5,9 @@ contact = {
     "phone": "0505554433"
 }
 
-print(contact["email"])
+if "name" in contact:
+    print(contact["name"])
+
+print(contact.get('email'))
+
 print("Готово")

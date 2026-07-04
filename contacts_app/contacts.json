@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Ivan",
+    "phone": "+380990001122",
+    "email": "ivan@gmail.com",
+    "city": "Київ"
+  },
+  {
+    "name": "Alina",
+    "phone": "+380998887766",
+    "email": "alina@gmail.com",
+    "city": "Полтава"
+  },
+  {
+    "name": "Irina",
+    "phone": "+380998887777",
+    "email": "irina@gmail.com",
+    "city": "Полтава"
+  },
+  {
+    "name": "Eduard",
+    "phone": "+380998887711",
+    "email": "eduard@gmail.com",
+    "city": "Полтава"
+  },
+  {
+    "name": "Bogdan",
+    "phone": "+380998887722",
+    "email": "bogdan@gmail.com",
+    "city": "Київ"
+  }
+]

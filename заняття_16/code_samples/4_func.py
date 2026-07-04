@@ -7,3 +7,5 @@ def add_tax(price):
 result = add_tax(100)
 
 print(result)
+
+# 120
