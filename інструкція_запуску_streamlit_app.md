@@ -236,6 +236,7 @@ dir
 Приклад:
 
 ```
+app.py
 main.py
 utils.py
 database.py
@@ -245,19 +246,19 @@ requirements.txt
 Тоді запускаємо
 
 ```powershell
-streamlit run main.py
+streamlit run app.py
 ```
 
 Якщо бачите
 
 ```
-app.py
+main.py
 ```
 
 то запускаємо
 
 ```powershell
-streamlit run app.py
+streamlit run main.py
 ```
 
 Запускати потрібно **той файл, у якому написаний Streamlit-код** (наприклад, є рядок `import streamlit as st`).
@@ -293,7 +294,7 @@ cd ..                   # повернутися назад
 
 venv\Scripts\activate   # активувати venv
 
-streamlit run main.py   # запустити програму
+streamlit run app.py    # запустити програму
 ```
 
 Якщо якась команда не працює, уважно прочитайте текст помилки — у більшості випадків він підказує, що саме потрібно виправити.
