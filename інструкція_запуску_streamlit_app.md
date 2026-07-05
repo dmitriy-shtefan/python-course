@@ -208,19 +208,19 @@ streamlit_app.py
 Запуск виглядає так:
 
 ```powershell
-streamlit run main.py
+python -m streamlit run main.py
 ```
 
 або
 
 ```powershell
-streamlit run app.py
+python -m streamlit run app.py
 ```
 
 або
 
 ```powershell
-streamlit run streamlit_app.py
+python -m streamlit run streamlit_app.py
 ```
 
 ---
@@ -246,7 +246,7 @@ requirements.txt
 Тоді запускаємо
 
 ```powershell
-streamlit run app.py
+python -m streamlit run app.py
 ```
 
 Якщо бачите
@@ -258,7 +258,7 @@ main.py
 то запускаємо
 
 ```powershell
-streamlit run main.py
+python -m streamlit run main.py
 ```
 
 Запускати потрібно **той файл, у якому написаний Streamlit-код** (наприклад, є рядок `import streamlit as st`).
@@ -294,7 +294,7 @@ cd ..                   # повернутися назад
 
 venv\Scripts\activate   # активувати venv
 
-streamlit run app.py    # запустити програму
+python -m streamlit run app.py    # запустити програму
 ```
 
 Якщо якась команда не працює, уважно прочитайте текст помилки — у більшості випадків він підказує, що саме потрібно виправити.
