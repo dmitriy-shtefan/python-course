@@ -7,3 +7,6 @@ student = {
 
 print(student["name"])
 print(student["points"][1])
+
+# Максим
+# 12
