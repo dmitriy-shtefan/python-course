@@ -14,5 +14,5 @@ with open("scores.txt", "r", encoding="utf-8") as file:
         point = parts[1]
         scores[name] = int(point)
 
-print(scores)
-print(scores["Оля"])
+print(scores)           # {'Оля': 11, 'Максим': 10}
+print(scores["Оля"])    # 11

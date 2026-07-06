@@ -28,5 +28,23 @@
     "phone": "+380998887722",
     "email": "bogdan@gmail.com",
     "city": "Київ"
+  },
+  {
+    "name": "Valeriy",
+    "phone": "+380122356436",
+    "email": "valeriy@gmail.com",
+    "city": "Одеса"
+  },
+  {
+    "name": "Ron",
+    "phone": "+380668888711",
+    "email": "ron@gmail.com",
+    "city": "Київ"
+  },
+  {
+    "name": "Ron",
+    "phone": "380668888711",
+    "email": "ron@gmail.com",
+    "city": "Київ"
   }
 ]

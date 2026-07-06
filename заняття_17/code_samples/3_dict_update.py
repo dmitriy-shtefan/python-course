@@ -8,6 +8,6 @@ student = {
 student["points"].append(12)
 student["group"] = "Red"
 
-print(student["name"])
-print(student["points"])
-print(student["group"])
+print(student["name"])      # Оля
+print(student["points"])    # [10, 11, 12]
+print(student["group"])     # Red

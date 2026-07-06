@@ -12,5 +12,5 @@ for contact in contacts:
     if contact["city"] == "Київ":
         count += 1
 
-print(count)
-print(contacts[1]["name"])
+print(count)                 # Е,А:2 (І:1)
+print(contacts[1]["name"])   # Марія
