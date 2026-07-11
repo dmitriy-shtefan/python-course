@@ -3,6 +3,6 @@
 person = ("Андрій", 14, "Київ")
 name, age, city = person
 
-print(name)
-print(age + 1)
-print(city)
+print(name)     # Андрій
+print(age + 1)  # 15
+print(city)     # Київ

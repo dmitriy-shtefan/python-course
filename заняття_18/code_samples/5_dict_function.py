@@ -10,5 +10,5 @@ student = {
     "marks": [10, 11, 12]
 }
 
-print(student["name"])
-print(get_average(student))
+print(student["name"])       # Данило
+print(get_average(student))  # Eduard: 11

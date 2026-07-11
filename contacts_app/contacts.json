@@ -1,50 +1,16 @@
 [
   {
-    "name": "Ivan",
-    "phone": "+380990001122",
-    "email": "ivan@gmail.com",
-    "city": "Київ"
+    "id": 1,
+    "name": "Максим",
+    "phone": "+380986665544",
+    "email": "maxim@gmail.com",
+    "city": "Львів"
   },
   {
-    "name": "Alina",
-    "phone": "+380998887766",
-    "email": "alina@gmail.com",
-    "city": "Полтава"
-  },
-  {
-    "name": "Irina",
-    "phone": "+380998887777",
-    "email": "irina@gmail.com",
-    "city": "Полтава"
-  },
-  {
-    "name": "Eduard",
-    "phone": "+380998887711",
-    "email": "eduard@gmail.com",
-    "city": "Полтава"
-  },
-  {
-    "name": "Bogdan",
-    "phone": "+380998887722",
-    "email": "bogdan@gmail.com",
-    "city": "Київ"
-  },
-  {
-    "name": "Valeriy",
-    "phone": "+380122356436",
-    "email": "valeriy@gmail.com",
-    "city": "Одеса"
-  },
-  {
-    "name": "Ron",
-    "phone": "+380668888711",
-    "email": "ron@gmail.com",
-    "city": "Київ"
-  },
-  {
-    "name": "Ron",
-    "phone": "380668888711",
-    "email": "ron@gmail.com",
-    "city": "Київ"
+    "id": 3,
+    "name": "Олег",
+    "phone": "+380986665534",
+    "email": "oleg@gmail.com",
+    "city": "Львів"
   }
 ]

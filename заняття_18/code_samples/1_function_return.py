@@ -6,5 +6,5 @@ def make_title(name):
 
 text = make_title("Оля")
 
-print(text)
-print(make_title("Максим"))
+print(text)                   # Учень: Оля
+print(make_title("Максим"))   # Учень: Максим

@@ -13,5 +13,5 @@ def count_long_words(words):
 languages = ["Python", "Java", "Scratch", "C++"]
 result = count_long_words(languages)
 
-print(result)
-print(languages[1])
+print(result)             # Eduard:, Irina: 4, Alina:2
+print(languages[1])       # "Java"

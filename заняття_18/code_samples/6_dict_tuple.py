@@ -8,6 +8,6 @@ products = {
 count, price = products["apple"]
 products["orange"] = (1, 30)
 
-print(count * price)
-print(products["orange"][1])
-print(len(products))
+print(count * price)            # 36
+print(products["orange"][1])    # 30
+print(len(products))            # 3
