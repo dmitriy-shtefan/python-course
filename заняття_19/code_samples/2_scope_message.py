@@ -5,7 +5,7 @@ message = "Привіт"
 
 
 def make_message(name):
-    message = message + ", " + name
+    messages = message + ", " + name
     return messages
 
 

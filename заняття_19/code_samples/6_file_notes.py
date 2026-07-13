@@ -5,7 +5,11 @@ with open("lesson_notes.txt", "w", encoding="utf-8") as file:
     file.write("Python\n")
     file.write("Файли\n")
 
-with open("lesson_notes.txt", "w", encoding="utf-8") as file:
+with open("lesson_notes.txt", "r", encoding="utf-8") as file:
     notes = file.readlines()
 
-print(lines[0])
+print(notes[0])
+
+
+# 1. неправильний "режим" відкриття файлу при читанні
+# 2. неправильне ім'я змінної

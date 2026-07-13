@@ -5,6 +5,7 @@ total = 0
 
 
 def add_points(points):
+    global total
     total += points
     return total
 
@@ -12,4 +13,8 @@ def add_points(points):
 add_points(5)
 add_points(3)
 
-print(score)
+print(total)
+
+
+# print(score) - немає змінної score
+# total += - зміна локальної змінної до її створення
