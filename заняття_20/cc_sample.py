@@ -1,7 +1,8 @@
 class Card:
     def __init__(self, owner, balance, is_active=True):
         self.owner = owner
-        self.balance = balance
+        # приватний атрибут
+        self.__balance = balance
         self.active = is_active
 
     def add_money(self, amount):
@@ -13,7 +14,7 @@ class Card:
         if not self.active:
             return False, "Картка не активна"
 
-        self.balance += amount
+        self.__balance += amount
 
         return True, ""
 
@@ -21,10 +22,10 @@ class Card:
         if amount <= 0:
             return False, "Некоректна сума для зняття"
 
-        if self.balance <= amount:
+        if self.__balance <= amount:
             return False, "Не вистачає коштів на рахунку."
 
-        self.balance -= amount
+        self.__balance -= amount
 
         return True, ""
 
@@ -44,11 +45,16 @@ class Card:
 
     def show_balance(self):
         print(f"Власник карти: {self.owner}.")
-        print(f"Поточний баланс: {self.balance}.")
+        print(f"Поточний баланс: {self.__balance}.")
 
 
 
 card1 = Card('Oleg', 100, False)
+
+# публічна зміна балансу
+print(card1.__balance)
+print(card1.owner)
+
 card1.add_money(50)
 card1.show_balance()
 

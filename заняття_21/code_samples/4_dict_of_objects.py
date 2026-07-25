@@ -13,7 +13,7 @@ contacts = {
 }
 
 
-print(contacts["оля"].short_info())
+print(contacts["оля"].short_info())     # А: Оля - Київ
 contacts["марія"].city = "Одеса"
-print(contacts["марія"].short_info())
-print(sorted(contacts))
+print(contacts["марія"].short_info())   # А: Марія - Одеса
+print(sorted(contacts))                 # А: [марія, оля]

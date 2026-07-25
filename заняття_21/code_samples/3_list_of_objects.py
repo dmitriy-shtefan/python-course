@@ -6,16 +6,15 @@ class Task:
     def is_done(self):
         return self.status == "готово"
 
-
 tasks = [
     Task("Повторити списки", "готово"),
     Task("Створити клас", "нова"),
     Task("Зробити вправу", "готово")
 ]
 
-
 for task in tasks:
     if task.is_done():
-        print(task.title)
+        print(task.title)   # Б: "Повторити списки"
+                            # Б: "Зробити вправу"
 
-print(len(tasks))
+print(len(tasks))           # Б: 3
