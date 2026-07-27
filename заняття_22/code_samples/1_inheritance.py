@@ -13,6 +13,6 @@ class Kid(Human):
 
 man = Kid("Саша")
 
-print(man.name)
-print(man.introduce())
-print(man.scream())
+print(man.name)          # Саша
+print(man.introduce())   # Мене звати Саша
+print(man.scream())      # Аааааа!!!

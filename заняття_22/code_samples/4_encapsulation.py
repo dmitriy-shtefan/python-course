@@ -16,5 +16,5 @@ account = BankAccount("Оля", 1000)
 account.deposit(500)
 account.deposit(-200)
 
-print(account.owner)
-print(account.get_balance())
+print(account.owner)           # Оля
+print(account.get_balance())   # 1500

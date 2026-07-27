@@ -16,4 +16,4 @@ class Walking:
 routes = [Bicycle(), Metro(), Walking()]
 
 for route in routes:
-    print(route.travel_time())
+    print(route.travel_time())    # 30, 15, 50

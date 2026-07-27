@@ -11,5 +11,5 @@ class Warning(Message):
 message = Message()
 warning = Warning()
 
-print(message.show())
-print(warning.show())
+print(message.show())    # Нове повідомлення
+print(warning.show())    # Увага!
