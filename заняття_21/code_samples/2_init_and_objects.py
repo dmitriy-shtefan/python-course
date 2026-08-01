@@ -9,6 +9,6 @@ class Student:
 
 student = Student("Оля", ("списки", "словники", "функції"))
 
-print(student.name)
-print(student.completed_topics)
-print(student.is_ready_for_oop())
+print(student.name)                # Оля
+print(student.completed_topics)    # ("списки", "словники", "функції")
+print(student.is_ready_for_oop())  # Б: True

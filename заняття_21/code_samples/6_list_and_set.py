@@ -12,6 +12,6 @@ recipe = Recipe("Смузі", ["банан", "ягоди", "банан", "мол
 
 unique_ingredients = set(recipe.ingredients)
 
-print(recipe.describe())
-print(sorted(unique_ingredients))
-print(len(unique_ingredients))
+print(recipe.describe())           # Смузі: "банан", "ягоди", "банан", "молоко", "ягоди"
+print(sorted(unique_ingredients))  # банан, молоко, ягоди
+print(len(unique_ingredients))     # 3

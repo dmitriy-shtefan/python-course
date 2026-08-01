@@ -14,5 +14,5 @@ project = Project("Контакти", {"Python", "Streamlit", "Python"})
 
 project.add_technology("Git")
 
-print(sorted(project.technologies))
-print(project.technology_count())
+print(sorted(project.technologies))     # Git, Python, Streamlit
+print(project.technology_count())       # 3

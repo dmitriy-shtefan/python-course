@@ -8,6 +8,8 @@ class Coffee:
 
 latte = Coffee()
 
-print(latte.size)
+print(latte.size)      # І: "середня", Б: "середня"
 latte.size = "велика"
-latte.describe()
+latte.describe()       # Б: "Кава: велика"
+
+
